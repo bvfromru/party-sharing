@@ -38,6 +38,7 @@
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
     "nanoid": "^4.0.2",
+    "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",
     "primereact": "^9.5.0",
     "react": "^18.2.0",
@@ -48,9 +49,9 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",

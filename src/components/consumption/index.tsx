@@ -11,6 +11,8 @@ const mockData = [
   }
 ];
 
+const mockColumns = ['1', '2', '4'];
+
 function Consumption() {
   const [products, setProducts] = useState([]);
 
@@ -21,6 +23,9 @@ function Consumption() {
         <Column field="name" header="Name"></Column>
         <Column field="category" header="Category"></Column>
         <Column field="quantity" header="Quantity"></Column>
+        {mockColumns.map((col, i) => (
+          <Column key={col} field={col} header={col} />
+        ))}
       </DataTable>
     </div>
   );

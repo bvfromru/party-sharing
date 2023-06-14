@@ -10,8 +10,8 @@ interface PurchasesProps {
 
 function Purchases({ peopleList }: PurchasesProps) {
   return (
-    <div>
-      <div className="p-inputgroup">
+    <div className="card flex flex-column md:flex-row gap-3">
+      <div className="p-inputgroup flex-1">
         <span className="p-inputgroup-addon">
           <i className="pi pi-cart-plus"></i>
         </span>
@@ -19,6 +19,7 @@ function Purchases({ peopleList }: PurchasesProps) {
       </div>
 
       <InputNumber
+        className="flex-1"
         placeholder="Цена"
         mode="currency"
         currency="RUB"
@@ -34,17 +35,21 @@ function Purchases({ peopleList }: PurchasesProps) {
         required
       />
 
-      <Dropdown
-        // value={selectedCity}
-        // onChange={(e) => setSelectedCity(e.value)}
-        options={peopleList}
-        optionLabel="name"
-        placeholder="Кто покупал"
-        className="w-full md:w-14rem"
-        disabled={!peopleList.length}
-      />
+      <div className="p-inputgroup flex-1">
+        <span className="p-inputgroup-addon">
+          <i className="pi pi-user"></i>
+        </span>
+        <Dropdown
+          // value={selectedCity}
+          // onChange={(e) => setSelectedCity(e.value)}
+          options={peopleList}
+          optionLabel="name"
+          placeholder="Кто покупал"
+          disabled={!peopleList.length}
+        />
+      </div>
 
-      <Button>Добавить</Button>
+      <Button className="flex-initial">Добавить</Button>
     </div>
   );
 }

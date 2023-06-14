@@ -18,12 +18,8 @@ function People({ peopleList, setPeopleList }: PeopleProps) {
     setInput('');
   };
 
-  const clearPeopleList = () => {
-    setPeopleList([]);
-  };
-
   return (
-    <div>
+    <div className="card flex flex-column gap-3">
       <div>
         {!!peopleList.length && (
           <ul>
@@ -43,9 +39,6 @@ function People({ peopleList, setPeopleList }: PeopleProps) {
           Добавить
         </Button>
       </div>
-      <Button className="p-button-danger" onClick={clearPeopleList}>
-        Очистить
-      </Button>
     </div>
   );
 }
