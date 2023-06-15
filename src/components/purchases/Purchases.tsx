@@ -4,40 +4,48 @@ import { DataView } from 'primereact/dataview';
 import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputText } from 'primereact/inputtext';
-import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
-import { Person, Purchase } from '../../models/models';
+import { FormEvent, useState } from 'react';
+import { PersonItem, PurchaseItem } from '../../models/models';
 
 interface PurchasesProps {
-  peopleList: Person[];
-  purchasesList: Purchase[];
-  setPurchasesList: Dispatch<SetStateAction<Purchase[]>>;
+  peopleList: PersonItem[];
+  purchasesList: PurchaseItem[];
+  onPurchaseAdd: (newPurchase: PurchaseItem) => void;
+  getPersonNameById: (id: string) => string;
 }
 
-function Purchases({ peopleList, purchasesList, setPurchasesList }: PurchasesProps) {
-  const [product, setProduct] = useState<string | undefined>();
+function Purchases({
+  peopleList,
+  purchasesList,
+  onPurchaseAdd,
+  getPersonNameById
+}: PurchasesProps) {
+  const [product, setProduct] = useState<string>('');
   const [price, setPrice] = useState<number | null>();
-  const [buyer, setBuyer] = useState<string | null>();
+  const [buyer, setBuyer] = useState<PersonItem | null>();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (product && price && buyer) {
-      const newPurchase: Purchase = {
+      const newPurchase: PurchaseItem = {
         id: nanoid(),
         name: product,
         price,
-        buyerId: buyer
+        buyerId: buyer.id
       };
-      setPurchasesList([...purchasesList, newPurchase]);
+      onPurchaseAdd(newPurchase);
     }
   };
 
-  const stringTemplate = (purchase: Purchase) => {
+  const stringTemplate = (purchase: PurchaseItem) => {
     return (
       <div className="col-12">
         {purchase.name} - {purchase.price} - {purchase.buyerId}
       </div>
     );
   };
+
+  if (!peopleList.length) return null;
 
   return (
     <div className="card flex flex-column gap-3">
@@ -87,9 +95,8 @@ function Purchases({ peopleList, purchasesList, setPurchasesList }: PurchasesPro
             options={peopleList}
             optionLabel="name"
             placeholder="Кто покупал"
-            disabled={!peopleList.length}
             value={buyer}
-            onChange={(e) => setBuyer(e.value.id)}
+            onChange={(e) => setBuyer(e.value)}
             // onChange={(e) => console.log(e)}
           />
         </div>

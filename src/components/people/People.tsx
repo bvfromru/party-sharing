@@ -2,25 +2,25 @@ import { nanoid } from 'nanoid';
 import { Button } from 'primereact/button';
 import { DataView } from 'primereact/dataview';
 import { InputText } from 'primereact/inputtext';
-import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
-import { Person } from '../../models/models';
+import { FormEvent, useState } from 'react';
+import { PersonItem } from '../../models/models';
 
 interface PeopleProps {
-  peopleList: Person[];
-  setPeopleList: Dispatch<SetStateAction<Person[]>>;
+  peopleList: PersonItem[];
+  onPersonAdd: (newPerson: PersonItem) => void;
 }
 
-function People({ peopleList, setPeopleList }: PeopleProps) {
+function People({ peopleList, onPersonAdd }: PeopleProps) {
   const [input, setInput] = useState('');
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const person = { id: nanoid(), name: input };
-    setPeopleList([...peopleList, person]);
+    const newPerson: PersonItem = { id: nanoid(), name: input };
+    onPersonAdd(newPerson);
     setInput('');
   };
 
-  const stringTemplate = (person: Person) => {
+  const stringTemplate = (person: PersonItem) => {
     return <div className="col-12">{person.name}</div>;
   };
 
