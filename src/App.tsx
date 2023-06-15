@@ -7,17 +7,21 @@ import { useState } from 'react';
 import Consumption from './components/consumption';
 import People from './components/people';
 import Purchases from './components/purchases';
-import { Person } from './models/models';
+import { Person, Purchase } from './models/models';
 
 function App() {
   const [peopleList, setPeopleList] = useState<Person[]>([]);
+  const [purchasesList, setPurchasesList] = useState<Purchase[]>([]);
 
   return (
     <div className="m-3 ">
-      <h2>Список людей</h2>
       <People peopleList={peopleList} setPeopleList={setPeopleList} />
-      <h2>Список покупок</h2>
-      <Purchases peopleList={peopleList} />
+
+      <Purchases
+        peopleList={peopleList}
+        purchasesList={purchasesList}
+        setPurchasesList={setPurchasesList}
+      />
       <h2>Таблица употребления</h2>
       <Consumption />
       <Button className="p-button-danger mt-3">Очистить</Button>

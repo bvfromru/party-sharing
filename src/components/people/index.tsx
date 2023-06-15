@@ -1,7 +1,8 @@
 import { nanoid } from 'nanoid';
 import { Button } from 'primereact/button';
+import { DataView } from 'primereact/dataview';
 import { InputText } from 'primereact/inputtext';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import { Person } from '../../models/models';
 
 interface PeopleProps {
@@ -12,33 +13,39 @@ interface PeopleProps {
 function People({ peopleList, setPeopleList }: PeopleProps) {
   const [input, setInput] = useState('');
 
-  const addPerson = () => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const person = { id: nanoid(), name: input };
     setPeopleList([...peopleList, person]);
     setInput('');
   };
 
+  const stringTemplate = (person: Person) => {
+    return <div className="col-12">{person.name}</div>;
+  };
+
   return (
     <div className="card flex flex-column gap-3">
+      <h2>Список людей</h2>
       <div>
         {!!peopleList.length && (
-          <ul>
-            {peopleList.map((el) => (
-              <li key={el.id}>
-                {el.name}
-                {/* <Button icon="pi pi-times" className="p-button-secondary" size="small"></Button> */}
-              </li>
-            ))}
-          </ul>
+          // <ul>
+          //   {peopleList.map((el, i) => (
+          //     <li key={el.id}>
+          //       {i + 1}. {el.name}
+          //     </li>
+          //   ))}
+          // </ul>
+          <DataView value={peopleList} itemTemplate={stringTemplate} />
         )}
       </div>
 
-      <div className="p-inputgroup">
+      <form onSubmit={handleSubmit} className="p-inputgroup">
         <InputText placeholder="Имя" value={input} onChange={(e) => setInput(e.target.value)} />
-        <Button className="p-button-prime" onClick={addPerson}>
+        <Button type="submit" className="p-button-prime" disabled={!input}>
           Добавить
         </Button>
-      </div>
+      </form>
     </div>
   );
 }
