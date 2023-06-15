@@ -5,16 +5,16 @@ import { ConsumptionItem, PersonItem, PurchaseItem } from '../../models/models';
 
 // const mockData = [
 //   {
-//     Кто: 'Виталий',
-//     col1: 'Col 1 Vitaliy',
-//     col2: 'Col 2 Vitaliy',
-//     col3: 'Col 3 Vitaliy'
+//     personId: 'pnki6q3mHpstbs0Y_cVJX',
+//     pnki6q3mHpstbs0Y_cVJX: 1,
+//     pnki6q3mHpstbs0Y_cVJX: 0,
+//     pnki6q3mHpstbs0Y_cVJX: '1'
 //   },
 //   {
-//     Кто: 'Олег',
-//     col1: 'Col 1 Oleg',
-//     col2: 'Col 2 Oleg',
-//     col3: 'Col 3 Oleg'
+//     personId: 'lkl345sdfsdf40Y_cDFG',
+//     pnki6q3mHpstbs0Y_cVJX: 1,
+//     pnki6q3mHpstbs0Y_cVJX: 0,
+//     pnki6q3mHpstbs0Y_cVJX: '1'
 //   }
 // ];
 
@@ -38,7 +38,7 @@ function Consumption({
   const mockColumns = consumptionList.length ? Object.keys(consumptionList[0]) : [];
 
   const handleItemChange = (e: any, key: string, rowIdx: number) => {
-    console.log(e, key, rowIdx);
+    // console.log(e, key, rowIdx);
     const value = e.checked ? 1 : 0;
     onItemChange(rowIdx, key, value);
   };

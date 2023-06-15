@@ -35,11 +35,11 @@ function App() {
 
   const onPurchaseAdd = (newPurchase: PurchaseItem) => {
     setPurchasesList([...purchasesList, newPurchase]);
-    console.log('oldConsumptionList ', consumptionList);
+    // console.log('oldConsumptionList ', consumptionList);
     const newConsumptionList = [...consumptionList];
     const newKey = newPurchase.id;
     newConsumptionList.forEach((item: any) => (item[newKey] = 0));
-    console.log('newConsumptionList ', newConsumptionList);
+    // console.log('newConsumptionList ', newConsumptionList);
     setConsumptionList(newConsumptionList);
   };
 
