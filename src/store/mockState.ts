@@ -1,57 +1,57 @@
 export const mockState = {
   people: [
-    { id: 'dfkjf', name: 'Виталий' },
-    { id: 'kjdkjsfd', name: 'Олег' },
-    { id: 'ee45', name: 'Наташа' },
-    { id: 'sdd43', name: 'Ирина' }
+    { id: 'vitaliyId', name: 'Виталий' },
+    { id: 'olegId', name: 'Олег' },
+    { id: 'natashaId', name: 'Наташа' },
+    { id: 'irinaId', name: 'Ирина' }
   ],
   purchases: [
     {
-      id: 'ejrere',
+      id: 'hlebId',
       name: 'Хлеб',
       price: 154,
-      buyerId: 'kjdkjsfd',
+      buyerId: 'olegId',
       consumers: {
-        dfkjf: 1,
-        kjdkjsfd: 1,
-        ee45: 1,
-        sdd43: 0
+        vitaliyId: 1,
+        olegId: 1,
+        natashaId: 1,
+        irinaId: 0
       }
     },
     {
-      id: 'df5gdfg',
+      id: 'pivoId',
       name: 'Пиво',
       price: 458,
-      buyerId: 'sdd43',
+      buyerId: 'irinaId',
       consumers: {
-        dfkjf: 0,
-        kjdkjsfd: 1,
-        ee45: 1,
-        sdd43: 0
+        vitaliyId: 0,
+        olegId: 1,
+        natashaId: 1,
+        irinaId: 0
       }
     },
     {
-      id: 'orpelf',
+      id: 'sokId',
       name: 'Сок',
       price: 48,
-      buyerId: 'ee45',
+      buyerId: 'natashaId',
       consumers: {
-        dfkjf: 1,
-        kjdkjsfd: 1,
-        ee45: 1,
-        sdd43: 1
+        vitaliyId: 1,
+        olegId: 1,
+        natashaId: 1,
+        irinaId: 1
       }
     },
     {
-      id: 'irerkm',
+      id: 'vodkaId',
       name: 'Водка',
       price: 456,
-      buyerId: 'dfkjf',
+      buyerId: 'vitaliyId',
       consumers: {
-        dfkjf: 0,
-        kjdkjsfd: 1,
-        ee45: 1,
-        sdd43: 0
+        vitaliyId: 0,
+        olegId: 1,
+        natashaId: 1,
+        irinaId: 0
       }
     }
   ]

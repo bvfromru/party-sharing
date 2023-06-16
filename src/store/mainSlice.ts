@@ -30,10 +30,36 @@ export const tasksSlice = createSlice({
       };
       state.people.forEach((person) => (newPurchase.consumers[person.id] = 0));
       state.purchases.push(newPurchase);
+    },
+
+    // Change one cell value of Consumption table
+    changeConsumption: (
+      state,
+      action: PayloadAction<{ personId: string; purchaseId: string; value: number }>
+    ) => {
+      const purchase = state.purchases.find(
+        (purchase) => purchase.id === action.payload.purchaseId
+      );
+      if (purchase) {
+        purchase.consumers[action.payload.personId] = action.payload.value;
+      }
+    },
+
+    // Change consumption for whole row in Consumption table
+    changeRowConsumption: (state, action: PayloadAction<{ purchaseId: string; value: number }>) => {
+      const purchase = state.purchases.find(
+        (purchase) => purchase.id === action.payload.purchaseId
+      );
+      if (purchase) {
+        Object.keys(purchase.consumers).forEach(
+          (key) => (purchase.consumers[key] = action.payload.value)
+        );
+      }
     }
   }
 });
 
-export const { addPerson, addPurchase } = tasksSlice.actions;
+export const { addPerson, addPurchase, changeConsumption, changeRowConsumption } =
+  tasksSlice.actions;
 
 export default tasksSlice.reducer;
