@@ -2,25 +2,19 @@ import { Button } from 'primereact/button';
 import { DataView } from 'primereact/dataview';
 import { InputText } from 'primereact/inputtext';
 import { FormEvent, useState } from 'react';
-import { PersonItem } from '../../models/models';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addPerson } from '../../store/mainSlice';
+import { PersonItem } from '../../store/models';
+import { selectPeople } from '../../store/selectors';
 
-interface PeopleProps {
-  peopleList: PersonItem[];
-  onPersonAdd: (newPerson: PersonItem) => void;
-}
-
-function People({ peopleList, onPersonAdd }: PeopleProps) {
-  const peoples = useAppSelector((state) => state.main.people);
+function People() {
+  const peopleList = useAppSelector(selectPeople);
   const dispatch = useAppDispatch();
 
   const [input, setInput] = useState('');
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const newPerson: PersonItem = { id: nanoid(), name: input };
-    // onPersonAdd(newPerson);
     dispatch(addPerson(input));
     setInput('');
   };
@@ -33,7 +27,7 @@ function People({ peopleList, onPersonAdd }: PeopleProps) {
     <div className="card flex flex-column gap-3">
       <h2>Список людей</h2>
       <div>
-        {!!peoples.length && (
+        {!!peopleList.length && (
           // <ul>
           //   {peopleList.map((el, i) => (
           //     <li key={el.id}>
@@ -41,7 +35,7 @@ function People({ peopleList, onPersonAdd }: PeopleProps) {
           //     </li>
           //   ))}
           // </ul>
-          <DataView value={peoples} itemTemplate={stringTemplate} />
+          <DataView value={peopleList} itemTemplate={stringTemplate} />
         )}
       </div>
 

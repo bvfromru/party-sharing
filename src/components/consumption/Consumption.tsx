@@ -1,7 +1,9 @@
 import { Checkbox } from 'primereact/checkbox';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
-import { ConsumptionItem, PersonItem, PurchaseItem } from '../../models/models';
+import { useAppSelector } from '../../store/hooks';
+import { ConsumptionColumnItem, ConsumptionRowItem } from '../../store/models';
+import { selectPeople, selectPurchases } from '../../store/selectors';
 
 // const mockData = [
 //   {
@@ -18,60 +20,60 @@ import { ConsumptionItem, PersonItem, PurchaseItem } from '../../models/models';
 //   }
 // ];
 
-interface ConsumptionProps {
-  consumptionList: ConsumptionItem[];
-  onItemChange: (rowIdx: number, key: string, value: number) => void;
-  peopleList: PersonItem[];
-  purchasesList: PurchaseItem[];
-  getPersonNameById: (id: string) => string;
-  getPurchaseNameById: (id: string) => string;
-}
+function Consumption() {
+  const purchasesList = useAppSelector(selectPurchases);
+  const peopleList = useAppSelector(selectPeople);
 
-function Consumption({
-  consumptionList,
-  onItemChange,
-  peopleList,
-  purchasesList,
-  getPersonNameById,
-  getPurchaseNameById
-}: ConsumptionProps) {
-  const mockColumns = consumptionList.length ? Object.keys(consumptionList[0]) : [];
+  const columns: ConsumptionColumnItem[] = [
+    { id: 'personId', name: 'Кто' },
+    ...purchasesList.map((purchase) => {
+      return {
+        id: purchase.id,
+        name: purchase.name
+      };
+    })
+  ];
+
+  const rows: ConsumptionRowItem[] = peopleList.map((person) => {
+    const row: ConsumptionRowItem = { id: person.id, name: person.name };
+    purchasesList.forEach((purchase) => {
+      const value = purchase.consumers[person.id];
+      row[purchase.id] = value;
+    });
+    return row;
+  });
+
+  console.log('Rows: ', rows);
 
   const handleItemChange = (e: any, key: string, rowIdx: number) => {
     // console.log(e, key, rowIdx);
     const value = e.checked ? 1 : 0;
-    onItemChange(rowIdx, key, value);
+    // onItemChange(rowIdx, key, value);
   };
 
-  const tableCellTemplate = (item: any, key: string, rowIdx: number) => {
-    console.log(item, key, rowIdx);
+  const tableCellTemplate = (cell: any, col: ConsumptionColumnItem, colIdx: number) => {
+    console.log('cell: ', cell, 'col: ', col, 'colIdx: ', colIdx);
 
     return (
       <div>
-        {key === 'personId' ? (
-          getPersonNameById(item[key])
-        ) : (
-          <Checkbox
-            checked={!!item[key]}
-            onChange={(e) => handleItemChange(e, key, rowIdx)}></Checkbox>
-        )}
+        {col.id === 'personId' ? cell.name : <Checkbox checked={!!cell[col.id]}></Checkbox>}
       </div>
     );
   };
 
-  if (!consumptionList.length) return null;
+  if (!peopleList.length || !purchasesList.length) return null;
 
   return (
     <div className="card">
       <h2>Таблица употребления</h2>
-      <DataTable value={consumptionList} stripedRows>
+      <DataTable value={rows} stripedRows>
         {/* <Column field="quantity" header="Кто"></Column> */}
-        {mockColumns.map((purchaseId, i) => (
+        {columns.map((col, colIdx) => (
           <Column
-            key={purchaseId}
-            field={purchaseId}
-            header={purchaseId === 'personId' ? 'Кто' : getPurchaseNameById(purchaseId)}
-            body={(product) => tableCellTemplate(product, purchaseId, i)}
+            key={col.id}
+            // field={col.id}
+            header={col.id === 'personId' ? 'Кто' : col.name}
+            body={(cell) => tableCellTemplate(cell, col, colIdx)}
           />
         ))}
       </DataTable>

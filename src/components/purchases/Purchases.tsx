@@ -1,25 +1,22 @@
-import { nanoid } from 'nanoid';
 import { Button } from 'primereact/button';
 import { DataView } from 'primereact/dataview';
 import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputText } from 'primereact/inputtext';
 import { FormEvent, useState } from 'react';
-import { PersonItem, PurchaseItem } from '../../models/models';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addPurchase } from '../../store/mainSlice';
+import { PersonItem, PurchaseItem } from '../../store/models';
+import { selectPeople, selectPurchases } from '../../store/selectors';
 
-interface PurchasesProps {
-  peopleList: PersonItem[];
-  purchasesList: PurchaseItem[];
-  onPurchaseAdd: (newPurchase: PurchaseItem) => void;
-  getPersonNameById: (id: string) => string;
-}
+function Purchases() {
+  const purchasesList = useAppSelector(selectPurchases);
+  const peopleList = useAppSelector(selectPeople);
+  const getPersonNameById = (id: string) =>
+    peopleList.find((person) => person.id === id)?.name ?? 'Not Found';
 
-function Purchases({
-  peopleList,
-  purchasesList,
-  onPurchaseAdd,
-  getPersonNameById
-}: PurchasesProps) {
+  const dispatch = useAppDispatch();
+
   const [product, setProduct] = useState<string>('');
   const [price, setPrice] = useState<number | null>();
   const [buyer, setBuyer] = useState<PersonItem | null>();
@@ -27,20 +24,19 @@ function Purchases({
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (product && price && buyer) {
-      const newPurchase: PurchaseItem = {
-        id: nanoid(),
+      const newPurchase = {
         name: product,
         price,
         buyerId: buyer.id
       };
-      onPurchaseAdd(newPurchase);
+      dispatch(addPurchase(newPurchase));
     }
   };
 
   const stringTemplate = (purchase: PurchaseItem) => {
     return (
       <div className="col-12">
-        {purchase.name} - {purchase.price} - {purchase.buyerId}
+        {purchase.name} - {purchase.price} - {getPersonNameById(purchase.buyerId)}
       </div>
     );
   };
