@@ -4,11 +4,18 @@ import { InputText } from 'primereact/inputtext';
 import { FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addPerson } from '../../store/mainSlice';
-import { PersonItem } from '../../store/models';
-import { selectPeople } from '../../store/selectors';
+import { AccountingObject, PersonItem } from '../../store/models';
+import { selectPeople, selectPurchases } from '../../store/selectors';
 
-function People() {
+interface PeopleProps {
+  netChanges: AccountingObject;
+  debts: AccountingObject;
+  balances: AccountingObject;
+}
+
+function People({ netChanges, debts, balances }: PeopleProps) {
   const peopleList = useAppSelector(selectPeople);
+  const purchasesList = useAppSelector(selectPurchases);
   const dispatch = useAppDispatch();
 
   const [input, setInput] = useState('');
@@ -20,7 +27,12 @@ function People() {
   };
 
   const stringTemplate = (person: PersonItem) => {
-    return <div className="col-12">{person.name}</div>;
+    return (
+      <div className="col-12">
+        {person.name}; Траты: {netChanges[person.id].toFixed()} руб; Долги:{' '}
+        {debts[person.id].toFixed()} руб; Баланс: {balances[person.id].toFixed()} руб
+      </div>
+    );
   };
 
   return (

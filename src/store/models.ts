@@ -29,3 +29,7 @@ export interface ConsumptionColumnItem {
 export interface ConsumptionRowItem {
   [key: string]: string | number;
 }
+
+export interface AccountingObject {
+  [key: string]: number;
+}

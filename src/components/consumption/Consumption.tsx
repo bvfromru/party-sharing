@@ -61,7 +61,7 @@ function Consumption() {
   };
 
   const headerCellTemplate = (col: ConsumptionColumnItem, colIdx: number) => {
-    console.log('col: ', col);
+    // console.log('col: ', col);
     const purchase = purchasesList.find((purchase) => purchase.id === col.id);
     let value: boolean;
     if (purchase) {
