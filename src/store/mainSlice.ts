@@ -1,11 +1,10 @@
 import { PayloadAction, createSlice, nanoid } from '@reduxjs/toolkit';
-import { mockState } from './mockState';
 import { MainSliceState, PersonItem, PurchaseItem } from './models';
 
-const initialState: MainSliceState = mockState;
+const initialState: MainSliceState = { people: [], purchases: [] };
 
-export const tasksSlice = createSlice({
-  name: 'main',
+export const mainSlice = createSlice({
+  name: 'mainSlice',
   initialState,
   reducers: {
     addPerson: (state, action: PayloadAction<string>) => {
@@ -55,11 +54,17 @@ export const tasksSlice = createSlice({
           (key) => (purchase.consumers[key] = action.payload.value)
         );
       }
+    },
+
+    clearMainSlice: (state) => {
+      console.log('state');
+      state.people = [];
+      state.purchases = [];
     }
   }
 });
 
-export const { addPerson, addPurchase, changeConsumption, changeRowConsumption } =
-  tasksSlice.actions;
+export const { addPerson, addPurchase, changeConsumption, changeRowConsumption, clearMainSlice } =
+  mainSlice.actions;
 
-export default tasksSlice.reducer;
+export default mainSlice.reducer;

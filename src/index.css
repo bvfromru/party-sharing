@@ -13,3 +13,7 @@ code {
 html {
   font-size: 14px;
 }
+
+.multiplier {
+  padding: 0.75rem 0 0.75rem 0.5rem;
+}

@@ -56,7 +56,7 @@ function Consumption() {
         {col.id === 'personId' ? (
           row.name
         ) : (
-          <div className="flex gap-3 align-items-center">
+          <div className="flex gap-2 align-items-center">
             <Checkbox
               checked={!!value}
               onChange={(e) =>
@@ -74,6 +74,7 @@ function Consumption() {
               size={1}
               step={0.25}
               disabled={!value}
+              inputClassName="multiplier"
             />
           </div>
         )}

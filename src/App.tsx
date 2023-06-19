@@ -7,12 +7,14 @@ import Consumption from './components/consumption/Consumption';
 import People from './components/people/People';
 import Purchases from './components/purchases/Purchases';
 import Transactions from './components/transactions/Transactions';
-import { useAppSelector } from './store/hooks';
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { clearMainSlice } from './store/mainSlice';
 import { AccountingObject, PurchaseItem } from './store/models';
 import { selectPeople, selectPurchases } from './store/selectors';
 // import 'primereact/resources/themes/nano/theme.css';
 
 function App() {
+  const dispatch = useAppDispatch();
   const peopleList = useAppSelector(selectPeople);
   const purchasesList = useAppSelector(selectPurchases);
   const netChanges: AccountingObject = {};
@@ -70,7 +72,12 @@ function App() {
 
       <Transactions balances={balances} />
 
-      <Button className="p-button-danger mt-3">Очистить</Button>
+      <Button
+        className="p-button-danger mt-3"
+        type="button"
+        onClick={() => dispatch(clearMainSlice)}>
+        Очистить
+      </Button>
     </div>
   );
 }
