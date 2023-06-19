@@ -1,6 +1,7 @@
 import { Checkbox } from 'primereact/checkbox';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
+import { InputNumber } from 'primereact/inputnumber';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { changeConsumption, changeRowConsumption } from '../../store/mainSlice';
 import { ConsumptionColumnItem, ConsumptionRowItem } from '../../store/models';
@@ -38,6 +39,10 @@ function Consumption() {
     dispatch(changeConsumption({ personId, purchaseId, value }));
   };
 
+  const handleMultiplierChange = (personId: string, purchaseId: string, value: number) => {
+    dispatch(changeConsumption({ personId, purchaseId, value }));
+  };
+
   const handleRowChange = (purchaseId: string, isChecked: boolean) => {
     // console.log('event: :', e, 'cell: ', cell, 'col: ', col, 'colIdx: ', colIdx);
     const value = isChecked ? 1 : 0;
@@ -45,16 +50,32 @@ function Consumption() {
   };
 
   const cellTemplate = (row: ConsumptionRowItem, col: ConsumptionColumnItem) => {
+    const value = row[col.id];
     return (
       <div>
         {col.id === 'personId' ? (
           row.name
         ) : (
-          <Checkbox
-            checked={!!row[col.id]}
-            onChange={(e) =>
-              handleItemChange(row.id as string, col.id, e.checked ?? false)
-            }></Checkbox>
+          <div className="flex gap-3 align-items-center">
+            <Checkbox
+              checked={!!value}
+              onChange={(e) =>
+                handleItemChange(row.id as string, col.id, e.checked ?? false)
+              }></Checkbox>
+            <InputNumber
+              value={value ? (value as number) : 1}
+              onValueChange={(e) =>
+                handleMultiplierChange(row.id as string, col.id, e.value as number)
+              }
+              mode="decimal"
+              showButtons
+              min={0.25}
+              max={10}
+              size={1}
+              step={0.25}
+              disabled={!value}
+            />
+          </div>
         )}
       </div>
     );
@@ -106,18 +127,3 @@ function Consumption() {
 }
 
 export default Consumption;
-
-// const mockData = [
-//   {
-//     personId: 'pnki6q3mHpstbs0Y_cVJX',
-//     pnki6q3mHpstbs0Y_cVJX: 1,
-//     pnki6q3mHpstbs0Y_cVJX: 0,
-//     pnki6q3mHpstbs0Y_cVJX: '1'
-//   },
-//   {
-//     personId: 'lkl345sdfsdf40Y_cDFG',
-//     pnki6q3mHpstbs0Y_cVJX: 1,
-//     pnki6q3mHpstbs0Y_cVJX: 0,
-//     pnki6q3mHpstbs0Y_cVJX: '1'
-//   }
-// ];

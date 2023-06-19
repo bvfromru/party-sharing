@@ -8,15 +8,16 @@ import People from './components/people/People';
 import Purchases from './components/purchases/Purchases';
 import Transactions from './components/transactions/Transactions';
 import { useAppSelector } from './store/hooks';
-import { PurchaseItem } from './store/models';
+import { AccountingObject, PurchaseItem } from './store/models';
 import { selectPeople, selectPurchases } from './store/selectors';
+// import 'primereact/resources/themes/nano/theme.css';
 
 function App() {
   const peopleList = useAppSelector(selectPeople);
   const purchasesList = useAppSelector(selectPurchases);
-  const netChanges: { [key: string]: number } = {};
-  const debts: { [key: string]: number } = {};
-  const balances: { [key: string]: number } = {};
+  const netChanges: AccountingObject = {};
+  const debts: AccountingObject = {};
+  const balances: AccountingObject = {};
 
   // Сalculates person's total expenses
   const calculateNetChangeById = (personId: string) => {
@@ -37,7 +38,7 @@ function App() {
     return onePortionPrice * multiplier;
   };
 
-  // Сalculates person's total debts
+  // Calculates person's total debts
   const calculateDebtsById = (personId: string) => {
     let debts = 0;
     purchasesList.forEach((purchase) => {
