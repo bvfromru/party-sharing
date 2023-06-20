@@ -1,5 +1,6 @@
 import { Button } from 'primereact/button';
-import { DataView } from 'primereact/dataview';
+import { Column } from 'primereact/column';
+import { DataTable } from 'primereact/datatable';
 import { InputText } from 'primereact/inputtext';
 import { FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -26,37 +27,39 @@ function People({ netChanges, debts, balances }: PeopleProps) {
     setInput('');
   };
 
-  const stringTemplate = (person: PersonItem) => {
+  const colTemplate = (person: PersonItem) => {
     return (
-      <div className="col-12">
-        {person.name}; Траты: {netChanges[person.id].toFixed()} руб; Долги:{' '}
-        {debts[person.id].toFixed()} руб; Баланс: {balances[person.id].toFixed()} руб
+      <div>
+        {person.name} (траты: {netChanges[person.id].toFixed()} руб; долги:{' '}
+        {debts[person.id].toFixed()} руб; баланс: {balances[person.id].toFixed()} руб)
       </div>
     );
   };
 
   return (
-    <div className="card flex flex-column gap-3">
+    <div className="card">
       <h2>Список людей</h2>
-      <div>
-        {!!peopleList.length && (
-          // <ul>
-          //   {peopleList.map((el, i) => (
-          //     <li key={el.id}>
-          //       {i + 1}. {el.name}
-          //     </li>
-          //   ))}
-          // </ul>
-          <DataView value={peopleList} itemTemplate={stringTemplate} />
-        )}
-      </div>
+      <div className="flex flex-column gap-3">
+        <div>
+          {!!peopleList.length && (
+            // <DataView value={peopleList} itemTemplate={stringTemplate} />
+            <DataTable removableSort value={peopleList} stripedRows size="small">
+              <Column
+                field="name"
+                header="Кто"
+                sortable
+                body={(person) => colTemplate(person)}></Column>
+            </DataTable>
+          )}
+        </div>
 
-      <form onSubmit={handleSubmit} className="p-inputgroup">
-        <InputText placeholder="Имя" value={input} onChange={(e) => setInput(e.target.value)} />
-        <Button type="submit" className="p-button-prime" disabled={!input}>
-          Добавить
-        </Button>
-      </form>
+        <form onSubmit={handleSubmit} className="p-inputgroup">
+          <InputText placeholder="Имя" value={input} onChange={(e) => setInput(e.target.value)} />
+          <Button type="submit" className="p-button-prime" disabled={!input}>
+            Добавить
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }

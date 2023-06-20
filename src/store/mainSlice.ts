@@ -57,7 +57,6 @@ export const mainSlice = createSlice({
     },
 
     clearMainSlice: (state) => {
-      console.log('state');
       state.people = [];
       state.purchases = [];
     }

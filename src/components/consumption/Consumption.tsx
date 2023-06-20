@@ -108,16 +108,13 @@ function Consumption() {
     );
   };
 
-  if (!peopleList.length || !purchasesList.length) return null;
-
   return (
     <div className="card">
       <h2>Таблица употребления</h2>
-      <DataTable value={rows} stripedRows>
+      <DataTable value={rows} stripedRows size="small">
         {columns.map((col, colIdx) => (
           <Column
             key={col.id}
-            // header={col.id === 'personId' ? 'Кто' : col.name}
             header={() => headerCellTemplate(col, colIdx)}
             body={(row) => cellTemplate(row, col)}
           />

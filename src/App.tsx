@@ -64,18 +64,24 @@ function App() {
 
   return (
     <div className="m-3 ">
-      <People netChanges={netChanges} debts={debts} balances={balances} />
+      <div className="flex flex-column gap-3 xl:flex-row">
+        <div className="flex-auto">
+          <People netChanges={netChanges} debts={debts} balances={balances} />
+        </div>
+        <div className="flex-auto">{!!peopleList.length && <Purchases />}</div>
+      </div>
 
-      <Purchases />
-
-      <Consumption />
-
-      <Transactions balances={balances} />
+      {!!peopleList.length && !!purchasesList.length && (
+        <>
+          <Consumption />
+          <Transactions balances={balances} />
+        </>
+      )}
 
       <Button
         className="p-button-danger mt-3"
         type="button"
-        onClick={() => dispatch(clearMainSlice)}>
+        onClick={() => dispatch(clearMainSlice())}>
         Очистить
       </Button>
     </div>
