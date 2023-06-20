@@ -16,6 +16,12 @@ export const mainSlice = createSlice({
       state.purchases.forEach((purchase) => (purchase.consumers[newPerson.id] = 0));
     },
 
+    deletePerson: (state, action: PayloadAction<string>) => {
+      const personId = action.payload;
+      state.people = state.people.filter((person) => person.id !== personId);
+      state.purchases.forEach((purchase) => delete purchase.consumers[personId]);
+    },
+
     addPurchase: (
       state,
       action: PayloadAction<{ name: string; price: number; buyerId: string }>
@@ -29,6 +35,11 @@ export const mainSlice = createSlice({
       };
       state.people.forEach((person) => (newPurchase.consumers[person.id] = 0));
       state.purchases.push(newPurchase);
+    },
+
+    deletePurchase: (state, action: PayloadAction<string>) => {
+      const purchaseId = action.payload;
+      state.purchases = state.purchases.filter((purchase) => purchase.id !== purchaseId);
     },
 
     // Change one cell value of Consumption table
@@ -63,7 +74,14 @@ export const mainSlice = createSlice({
   }
 });
 
-export const { addPerson, addPurchase, changeConsumption, changeRowConsumption, clearMainSlice } =
-  mainSlice.actions;
+export const {
+  addPerson,
+  addPurchase,
+  changeConsumption,
+  changeRowConsumption,
+  clearMainSlice,
+  deletePerson,
+  deletePurchase
+} = mainSlice.actions;
 
 export default mainSlice.reducer;

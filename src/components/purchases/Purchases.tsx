@@ -6,8 +6,8 @@ import { InputNumber } from 'primereact/inputnumber';
 import { InputText } from 'primereact/inputtext';
 import { FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { addPurchase } from '../../store/mainSlice';
-import { PersonItem } from '../../store/models';
+import { addPurchase, deletePurchase } from '../../store/mainSlice';
+import { PersonItem, PurchaseItem } from '../../store/models';
 import { selectPeople, selectPurchases } from '../../store/selectors';
 
 function Purchases() {
@@ -37,6 +37,23 @@ function Purchases() {
     }
   };
 
+  const firstColTemplate = (purchase: PurchaseItem) => {
+    const { name, id } = purchase;
+    return (
+      <div className="flex gap-2 align-items-center">
+        <Button
+          icon="pi pi-times"
+          className="delete-button"
+          text
+          severity="danger"
+          size="small"
+          onClick={() => dispatch(deletePurchase(id))}
+        />
+        {name}
+      </div>
+    );
+  };
+
   return (
     <div className="card">
       <h2>Список покупок</h2>
@@ -47,7 +64,7 @@ function Purchases() {
               field="name"
               header="Покупка"
               sortable
-              body={({ name }, { rowIndex }) => `${rowIndex + 1}. ${name}`}></Column>
+              body={(purchase, { rowIndex }) => firstColTemplate(purchase)}></Column>
             <Column
               field="price"
               header="Цена"

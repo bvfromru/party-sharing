@@ -17,3 +17,8 @@ html {
 .multiplier {
   padding: 0.5rem 0 0.5rem 0.5rem;
 }
+
+.p-button.delete-button {
+  width: 2.4rem;
+  padding: 0.5rem;
+}
