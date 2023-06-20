@@ -63,18 +63,25 @@ function App() {
   calculateAccounting();
 
   return (
-    <div className="m-3 ">
-      <div className="flex flex-column gap-3 xl:flex-row">
+    <div className="m-2">
+      <div className="flex flex-column gap-2 xl:flex-row">
         <div className="flex-auto">
           <People netChanges={netChanges} debts={debts} balances={balances} />
         </div>
         <div className="flex-auto">{!!peopleList.length && <Purchases />}</div>
+        <div className="flex-auto">
+          {!!peopleList.length && !!purchasesList.length && (
+            <>
+              <Transactions balances={balances} />
+            </>
+          )}
+        </div>
       </div>
 
       {!!peopleList.length && !!purchasesList.length && (
         <>
           <Consumption />
-          <Transactions balances={balances} />
+          {/* <Transactions balances={balances} /> */}
         </>
       )}
 

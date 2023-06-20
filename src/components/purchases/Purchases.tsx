@@ -5,6 +5,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputText } from 'primereact/inputtext';
 import { FormEvent, useState } from 'react';
+import { getPersonNameById } from '../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addPurchase, deletePurchase } from '../../store/mainSlice';
 import { PersonItem, PurchaseItem } from '../../store/models';
@@ -13,8 +14,6 @@ import { selectPeople, selectPurchases } from '../../store/selectors';
 function Purchases() {
   const purchasesList = useAppSelector(selectPurchases);
   const peopleList = useAppSelector(selectPeople);
-  const getPersonNameById = (id: string) =>
-    peopleList.find((person) => person.id === id)?.name ?? 'Not Found';
 
   const dispatch = useAppDispatch();
 
@@ -34,6 +33,7 @@ function Purchases() {
       setProduct('');
       setPrice(null);
       setBuyer(null);
+      console.log(e);
     }
   };
 
@@ -73,8 +73,8 @@ function Purchases() {
             <Column
               field="buyerId"
               header="Кто покупал"
-              sortable
-              body={({ buyerId }) => getPersonNameById(buyerId)}></Column>
+              // sortable
+              body={({ buyerId }) => getPersonNameById(peopleList, buyerId)}></Column>
           </DataTable>
         )}
         <form className="card flex flex-column md:flex-row gap-3" onSubmit={handleSubmit}>

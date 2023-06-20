@@ -1,5 +1,6 @@
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
+import { getPersonNameById } from '../../helpers/utils';
 import { useAppSelector } from '../../store/hooks';
 import { AccountingObject } from '../../store/models';
 import { selectPeople } from '../../store/selectors';
@@ -32,7 +33,11 @@ function Transactions({ balances }: TransactionsProps) {
       if (amount > TOLERANCE) {
         givers[giverKey] -= amount;
         recievers[receiverKey] -= amount;
-        transactions.push({ from: giverKey, to: receiverKey, amount: Math.round(amount) });
+        transactions.push({
+          from: getPersonNameById(peopleList, giverKey),
+          to: getPersonNameById(peopleList, receiverKey),
+          amount: Math.round(amount)
+        });
       }
     }
   }
@@ -41,21 +46,13 @@ function Transactions({ balances }: TransactionsProps) {
   // console.log('Givers: ', givers);
   // console.log('Recievers:', recievers);
 
-  const personTemplate = (personId: string) => {
-    return <>{peopleList.find((person) => person.id === personId)?.name ?? 'Person not found'}</>;
-  };
-
   return (
     <div className="card">
       <h2>Таблица переводов</h2>
       {transactions.length ? (
         <DataTable removableSort value={transactions} stripedRows size="small">
-          <Column
-            field="from"
-            header="Кто"
-            sortable
-            body={({ from }) => personTemplate(from)}></Column>
-          <Column field="to" header="Кому" sortable body={({ to }) => personTemplate(to)}></Column>
+          <Column field="from" header="Кто" sortable></Column>
+          <Column field="to" header="Кому" sortable></Column>
           <Column
             field="amount"
             header="Сколько"
