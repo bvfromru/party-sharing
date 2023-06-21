@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+html {
+  font-size: 14px;
+}
+
+.p-datatable .p-datatable-tbody > tr > td.p-frozen-column {
+  z-index: 999;
+  border-right-width: 1px;
+}
+
+.multiplier {
+  padding: 0.5rem 0 0.5rem 0.5rem;
+}
+
+.p-button.delete-button {
+  width: 1.6rem;
+  padding: 0.2rem;
+}
