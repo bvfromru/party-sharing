@@ -70,7 +70,7 @@ function Consumption() {
               mode="decimal"
               showButtons
               min={0.25}
-              max={10}
+              max={1000}
               size={1}
               step={0.25}
               disabled={!value}
