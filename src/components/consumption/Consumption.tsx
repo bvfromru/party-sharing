@@ -111,12 +111,14 @@ function Consumption() {
   return (
     <div className="card">
       <h2>Таблица употребления</h2>
-      <DataTable value={rows} stripedRows size="small">
+      <DataTable value={rows} stripedRows size="small" removableSort>
         {columns.map((col, colIdx) => (
           <Column
             key={col.id}
+            sortField="name"
             header={() => headerCellTemplate(col, colIdx)}
             body={(row) => cellTemplate(row, col)}
+            sortable={colIdx === 0}
           />
         ))}
       </DataTable>

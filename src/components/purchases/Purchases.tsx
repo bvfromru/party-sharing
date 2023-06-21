@@ -27,7 +27,7 @@ function Purchases() {
       const newPurchase = {
         name: product,
         price,
-        buyerId: buyer.id
+        buyer: buyer
       };
       dispatch(addPurchase(newPurchase));
       setProduct('');
@@ -71,9 +71,9 @@ function Purchases() {
               sortable
               body={({ price }) => `${price} руб`}></Column>
             <Column
-              field="buyerId"
+              sortField="buyerName"
               header="Кто покупал"
-              // sortable
+              sortable
               body={({ buyerId }) => getPersonNameById(peopleList, buyerId)}></Column>
           </DataTable>
         )}

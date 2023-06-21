@@ -53,7 +53,7 @@ function People({ netChanges, debts, balances }: PeopleProps) {
           {!!peopleList.length && (
             <DataTable removableSort value={peopleList} stripedRows size="small">
               <Column
-                field="name"
+                sortField="name"
                 header="Кто"
                 sortable
                 body={(person) => colTemplate(person)}></Column>

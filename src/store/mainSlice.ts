@@ -24,13 +24,14 @@ export const mainSlice = createSlice({
 
     addPurchase: (
       state,
-      action: PayloadAction<{ name: string; price: number; buyerId: string }>
+      action: PayloadAction<{ name: string; price: number; buyer: PersonItem }>
     ) => {
       const newPurchase: PurchaseItem = {
         id: nanoid(),
         name: action.payload.name,
         price: action.payload.price,
-        buyerId: action.payload.buyerId,
+        buyerId: action.payload.buyer.id,
+        buyerName: action.payload.buyer.name,
         consumers: {}
       };
       state.people.forEach((person) => (newPurchase.consumers[person.id] = 0));

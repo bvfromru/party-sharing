@@ -14,6 +14,7 @@ export interface PurchaseItem {
   name: string;
   price: number;
   buyerId: string;
+  buyerName: string;
   consumers: Record<string, number>;
 }
 
