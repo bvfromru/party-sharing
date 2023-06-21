@@ -1,5 +1,6 @@
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
+import { DEFAULT_TOLERANCE } from '../../helpers/constants';
 import { getPersonNameById } from '../../helpers/utils';
 import { useAppSelector } from '../../store/hooks';
 import { AccountingObject } from '../../store/models';
@@ -12,7 +13,6 @@ interface TransactionsProps {
 function Transactions({ balances }: TransactionsProps) {
   const peopleList = useAppSelector(selectPeople);
   const transactions = [];
-  const TOLERANCE = 1;
 
   const givers: AccountingObject = Object.keys(balances)
     .filter((key) => balances[key] > 0)
@@ -30,7 +30,7 @@ function Transactions({ balances }: TransactionsProps) {
       const giverBalance = givers[giverKey];
       const receiverBalance = recievers[receiverKey];
       const amount = giverBalance < receiverBalance ? giverBalance : receiverBalance;
-      if (amount > TOLERANCE) {
+      if (amount > DEFAULT_TOLERANCE) {
         givers[giverKey] -= amount;
         recievers[receiverKey] -= amount;
         transactions.push({

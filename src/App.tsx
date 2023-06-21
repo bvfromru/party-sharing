@@ -86,6 +86,9 @@ function App() {
         </div>
       </div>
 
+      <div className="my-3"></div>
+      {/* <Settings /> */}
+
       <Button
         className="p-button-danger mt-3"
         type="button"
