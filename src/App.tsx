@@ -65,11 +65,11 @@ function App() {
   return (
     <div className="m-2">
       <div className="flex flex-column flex-wrap gap-2 xl:flex-row">
-        <div className="flex-auto">
+        <div className="flex-initial">
           <People netChanges={netChanges} debts={debts} balances={balances} />
         </div>
-        <div className="flex-auto">{!!peopleList.length && <Purchases />}</div>
-        <div className="flex-auto flex-order-1 xl:flex-order-0">
+        <div className="flex-1">{!!peopleList.length && <Purchases />}</div>
+        <div className="flex-initial flex-order-1 xl:flex-order-0">
           {!!peopleList.length && !!purchasesList.length && (
             <>
               <Transactions balances={balances} />
@@ -80,7 +80,6 @@ function App() {
           {!!peopleList.length && !!purchasesList.length && (
             <>
               <Consumption />
-              {/* <Transactions balances={balances} /> */}
             </>
           )}
         </div>
