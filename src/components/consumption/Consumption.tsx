@@ -97,7 +97,7 @@ function Consumption() {
         {colIdx === 0 ? (
           'Кто'
         ) : (
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex gap-2 flex-wrap z-index">
             <Checkbox
               checked={value}
               onChange={(e) => handleRowChange(col.id, e.checked ?? false)}></Checkbox>
@@ -111,7 +111,7 @@ function Consumption() {
   return (
     <div className="card">
       <h2>Таблица употребления</h2>
-      <DataTable value={rows} stripedRows size="small" removableSort>
+      <DataTable value={rows} stripedRows size="small" removableSort scrollable>
         {columns.map((col, colIdx) => (
           <Column
             key={col.id}
@@ -119,6 +119,7 @@ function Consumption() {
             header={() => headerCellTemplate(col, colIdx)}
             body={(row) => cellTemplate(row, col)}
             sortable={colIdx === 0}
+            frozen={colIdx === 0}
           />
         ))}
       </DataTable>
