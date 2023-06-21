@@ -1,8 +1,8 @@
-import { useFormik } from 'formik';
 import { Button } from 'primereact/button';
-import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
+import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputText } from 'primereact/inputtext';
+import { FormEvent, useRef, useState } from 'react';
 import { useAppDispatch } from '../../../store/hooks';
 import { addPurchase } from '../../../store/mainSlice';
 import { PersonItem } from '../../../store/models';
@@ -11,44 +11,44 @@ interface PurchasesTableProps {
   peopleList: PersonItem[];
 }
 
-interface FormData {
-  name: string;
-  price: number | undefined;
-  buyer: PersonItem | null;
-}
-
 function AddPurchaseForm({ peopleList }: PurchasesTableProps) {
   const dispatch = useAppDispatch();
 
-  const initialValues: FormData = {
-    name: '',
-    price: undefined,
-    buyer: null
-  };
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = ({ name, price, buyer }: FormData) => {
+  const [name, setName] = useState<string>('');
+  const [price, setPrice] = useState<number | null>();
+  const [buyer, setBuyer] = useState<PersonItem | null>(null);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (name && price && buyer) {
-      dispatch(addPurchase({ name, price, buyer }));
-      formik.resetForm();
+      const newPurchase = {
+        name,
+        price,
+        buyer
+      };
+      dispatch(addPurchase(newPurchase));
+      setName('');
+      setPrice(null);
+      setBuyer(null);
+      inputRef.current?.focus();
     }
   };
 
-  const formik = useFormik({ initialValues, onSubmit: handleSubmit });
-
   return (
-    <form className="card flex flex-column md:flex-row gap-3" onSubmit={formik.handleSubmit}>
+    <form className="card flex flex-column md:flex-row gap-3" onSubmit={handleSubmit}>
       <div className="p-inputgroup flex-1">
         <span className="p-inputgroup-addon">
           <i className="pi pi-cart-plus"></i>
         </span>
 
         <InputText
-          name="name"
           placeholder="Покупка"
-          value={formik.values.name}
-          onChange={(e) => {
-            formik.setFieldValue('name', e.target.value);
-          }}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          ref={inputRef}
         />
       </div>
 
@@ -66,9 +66,9 @@ function AddPurchaseForm({ peopleList }: PurchasesTableProps) {
         incrementButtonIcon="pi pi-plus"
         decrementButtonIcon="pi pi-minus"
         step={50}
-        value={formik.values.price}
-        onValueChange={(e) => formik.setFieldValue('price', e.value)}
-        // className={classNames({ 'p-invalid': isFormFieldInvalid('city') })}
+        required
+        value={price}
+        onChange={(e) => setPrice(e.value)}
       />
 
       <div className="p-inputgroup flex-1">
@@ -76,16 +76,16 @@ function AddPurchaseForm({ peopleList }: PurchasesTableProps) {
           <i className="pi pi-user"></i>
         </span>
         <Dropdown
-          name="buyer"
           options={peopleList}
           optionLabel="name"
           placeholder="Кто покупал"
-          value={formik.values.buyer}
-          onChange={(e: DropdownChangeEvent) => formik.setFieldValue('buyer', e.value)}
+          value={buyer}
+          required
+          onChange={(e) => setBuyer(e.value)}
         />
       </div>
 
-      <Button type="submit" className="flex-initial">
+      <Button type="submit" className="flex-initial" disabled={!buyer}>
         Добавить
       </Button>
     </form>
