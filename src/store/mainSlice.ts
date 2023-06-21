@@ -20,6 +20,7 @@ export const mainSlice = createSlice({
       const personId = action.payload;
       state.people = state.people.filter((person) => person.id !== personId);
       state.purchases.forEach((purchase) => delete purchase.consumers[personId]);
+      state.purchases = state.purchases.filter((purchase) => purchase.buyerId !== personId);
     },
 
     addPurchase: (
