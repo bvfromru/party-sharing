@@ -39,7 +39,7 @@ function People({ netChanges, debts, balances }: PeopleProps) {
           size="small"
           onClick={() => dispatch(deletePerson(id))}
         />
-        {name} (траты: {netChanges[id].toFixed()} руб; долги: {debts[id].toFixed()} руб; баланс:{' '}
+        {name} (потратил: {netChanges[id].toFixed()} руб; потребил: {debts[id].toFixed()} руб; баланс:{' '}
         {balances[id].toFixed()} руб)
       </div>
     );
