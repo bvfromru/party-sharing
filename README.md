@@ -2,7 +2,7 @@
 
 Simple application to calculate optimal money transactions between friends.
 Simplified analogue of Splitwise app.
-React, Typescript, Redux Toolkit, Prime UI library
+React, Typescript, Redux Toolkit, Prime UI library.
 
 **Deploy:** https://bvfromru.github.io/party-sharing/
 
